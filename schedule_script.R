@@ -1,10 +1,15 @@
-# Check if log.csv exists
+## NB: This script uses assumes files are in
+## Current working directory -- so, you must
+## set the "Start in (optional)" field in
+## Task Scheduler or use absolute file paths.
 
-if(file.exists("log.csv")) {
+# Check if log.rds exists
+
+if(file.exists("log.rds")) {
   
   # Read in current log and assign to `log`
   
-  log <- read.csv("log.csv")
+  log <- readRDS("log.rds")
   
   # Capture the time
   
@@ -14,6 +19,8 @@ if(file.exists("log.csv")) {
   # Assign it the value held in `last_run`
   
   log[nrow(log) + 1, 1] <- last_run
+  
+  saveRDS(log, file = "log.rds")
   
   
 } else {
@@ -31,12 +38,6 @@ if(file.exists("log.csv")) {
   
   # Write to CSV file "log.csv"
   
-  write.csv(log, file = "log.csv", row.names = FALSE)
+  saveRDS(log, file =  "log.rds")
   
 }
-
-
-
-
-
-
